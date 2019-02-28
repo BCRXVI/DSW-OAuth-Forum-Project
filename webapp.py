@@ -43,6 +43,8 @@ def post():
     pass
     #This function should add the new post to the JSON file of posts and then render home.html and display the posts.  
     newpost = request.form[message]
+    with open(myFile, 'r+') as f
+    Data = json.load(f)
     #Every post should include the username of the poster and text of the post. 
 
 #redirect to GitHub's OAuth page and confirm callback URL
