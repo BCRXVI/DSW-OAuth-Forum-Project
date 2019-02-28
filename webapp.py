@@ -45,6 +45,7 @@ def post():
     newpost = request.form['message']
     with open(myFile, 'r+') as f:
         Data = json.load(f)
+    return render_template('home.html')
     #Every post should include the username of the poster and text of the post. 
 
 #redirect to GitHub's OAuth page and confirm callback URL
