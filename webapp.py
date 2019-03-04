@@ -38,6 +38,9 @@ def inject_logged_in():
 def home():
     return render_template('home.html')
 
+def posttohtml():
+    
+
 @app.route('/posted', methods=['POST'])
 def post():
     #This function should add the new post to the JSON file of posts and then render home.html and display the posts.  
@@ -49,9 +52,8 @@ def post():
         f.seek(0)
         f.truncate()
         json.dump(Data, f)
-    return render_template('home.html')
+    return render_template('home.html', past_posts =  )
     #Every post should include the username of the poster and text of the post. 
-
 #redirect to GitHub's OAuth page and confirm callback URL
 @app.route('/login')
 def login():   
