@@ -48,7 +48,7 @@ def post():
         Data.append({'user': username, 'post': newpost})
         f.seek(0)
         f.truncate()
-        json.dump(f)
+        json.dump(Data, f)
     return render_template('home.html')
     #Every post should include the username of the poster and text of the post. 
 
