@@ -48,7 +48,7 @@ def posttohtml():
 def post():
     #This function should add the new post to the JSON file of posts and then render home.html and display the posts.  
     newpost = request.form['message']
-    username = session['github_token']
+    username = session['user_data']['login']
     with open(myFile, 'r+') as f:
         Data = json.load(f)
         Data.append({'user': username, 'post': newpost})
