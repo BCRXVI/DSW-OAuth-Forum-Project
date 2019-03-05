@@ -55,7 +55,7 @@ def post():
         f.seek(0)
         f.truncate()
         json.dump(Data, f)
-    return render_template('home.html', past_posts = )
+    return render_template('home.html', past_posts = Data)
     #Every post should include the username of the poster and text of the post. 
 #redirect to GitHub's OAuth page and confirm callback URL
 @app.route('/login')
