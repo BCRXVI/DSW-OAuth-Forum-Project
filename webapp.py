@@ -41,8 +41,8 @@ def home():
 def posttohtml():
       with open('forumsubs.json') as forumsubs:
         posts = json.load(demographics_data)
-    for post in posts:
-    options += Markup("<p> value=\"" + post['user'] + post['post'] + "</p>")
+      for post in posts:
+        options += Markup("<p> value=\"" + post['user'] + post['post'] + "</p>")
 
 @app.route('/posted', methods=['POST'])
 def post():
