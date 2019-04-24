@@ -40,7 +40,7 @@ def home():
 
 def posttohtml():
       with open('forumsubs.json') as forumsubs:
-        posts = json.load(demographics_data)
+        posts = json.load(forumsubs)
       options = ""
       for post in posts:
         options += Markup("<p> value=\"" + post['user'] + post['post'] + "</p>")
