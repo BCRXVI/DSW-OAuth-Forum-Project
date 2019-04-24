@@ -43,7 +43,7 @@ def posttohtml():
         posts = json.load(forumsubs)
       options = ""
       for post in posts:
-        options += Markup("<p>" + post['user'] + " " + post['post'] + "</p>")
+        options += Markup("<p>" + post['user'] + ":" + " " + post['post'] + "</p>")
       return options
 
 @app.route('/posted', methods=['POST'])
