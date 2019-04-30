@@ -39,20 +39,19 @@ def home():
     return render_template('home.html')
 
 def posttohtml():
-      with open('forumsubs.json') as forumsubs:
-        posts = json.load(forumsubs)
+      with open as forumsubs:
+        posts = 
       options = ""
       for post in posts:
         options += Markup("<p>" + post['user'] + ":" + " " + post['post'] + "</p>")
       return options
 
 @app.route('/posted', methods=['POST'])
-def post():
-    #This function should add the new post to the JSON file of posts and then render home.html and display the posts.  
+def post(): 
     newpost = request.form['message']
     username = session['user_data']['login']
-    with open(myFile, 'r+') as f:
-        Data = json.load(f)
+    with open(, 'r+') as f:
+        Data = 
         Data.append({'user': username, 'post': newpost})
         f.seek(0)
         f.truncate()
