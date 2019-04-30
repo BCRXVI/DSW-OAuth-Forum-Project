@@ -30,6 +30,18 @@ github = oauth.remote_app(
 
 #TODO: Create the file on Heroku using os.system.  Ex) os.system("echo '[]'>"+myFile) puts '[]' into your file
 
+def main():
+    url = 'mongodb+srv://{}:{}@{}:{}/{}'.format(
+        os.environ["MONGO_USERNAME"],
+        os.environ["MONGO_PASSWORD"],
+        os.environ["MONGO_HOST"],
+        os.environ["MONGO_DBNAME"])
+        
+    
+    client = pymongo.MongoClient(os.environ["MONGO_HOST"])
+    db = client[os.environ["MONGO_DBNAME"]]
+    collection = db['myCollection']
+
 @app.context_processor
 def inject_logged_in():
     return {"logged_in":('github_token' in session)}
