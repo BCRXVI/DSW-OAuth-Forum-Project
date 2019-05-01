@@ -1,10 +1,13 @@
-from flask import Flask, redirect, url_for, session, request, jsonify, Markup
+from flask import Flask, redirect, url_for, session, request, Markup
 from flask_oauthlib.client import OAuth
 from flask import render_template
+from pymongo import MongoClient
 
+import sys
+import dns
+import pymongo
 import pprint
 import os
-import json
 
 app = Flask(__name__)
 
@@ -25,23 +28,21 @@ github = oauth.remote_app(
     access_token_url='https://github.com/login/oauth/access_token',  
     authorize_url='https://github.com/login/oauth/authorize' #URL for github's OAuth login
 )
-
+url = 'mongodb://{}:{}@{}/{}'.format(
+    os.environ["MONGO_USERNAME"],
+    os.environ["MONGO_PASSWORD"],
+    os.environ["MONGO_HOST"],
+    os.environ["MONGO_DBNAME"])
+    
+client = pymongo.MongoClient(os.environ["MONGO_HOST"])
+db = client[os.environ["MONGO_DBNAME"]]
+collection = db['Forum-Database']
 #TODO: Create and set a global variable for the name of you JSON file here.  The file will be storedd on Heroku, so you don't need to make it in GitHub
 
 #TODO: Create the file on Heroku using os.system.  Ex) os.system("echo '[]'>"+myFile) puts '[]' into your file
 
-def main():
-    url = 'mongodb+srv://{}:{}@{}:{}/{}'.format(
-        os.environ["MONGO_USERNAME"],
-        os.environ["MONGO_PASSWORD"],
-        os.environ["MONGO_HOST"],
-        os.environ["MONGO_DBNAME"])
-        
-    
-    client = pymongo.MongoClient(os.environ["MONGO_HOST"])
-    db = client[os.environ["MONGO_DBNAME"]]
-    collection = db['myCollection']
-
+def main():   
+    pass
 @app.context_processor
 def inject_logged_in():
     return {"logged_in":('github_token' in session)}
@@ -52,13 +53,24 @@ def home():
 
 @app.route('/posted', methods=['POST'])
 def post():
+    newpost = request.form['message']
+    username = session['user_data']['login']
+    client = MongoClient()
+    db = client['Forum_Database']
+    posternote = {'user': username, 'post': newpost}
+    post_id = collection.insert_one(posternote).inserted_id
+    return render_template('home.html')
+    #return render_template('home.html', past_posts = posttohtml())
+    #Every post should include the username of the poster and text of the post. 
+#redirect to GitHub's OAuth page and confirm callback URL
+@app.route('/login')
+def login():   
+    return github.authorize(callback=url_for('authorized', _external=True, _scheme='http')) #callback URL must match the pre-configured callback URL
+
     #This function should add the new post to the JSON file of posts and then render home.html and display the posts.  
     #Every post should include the username of the poster and text of the post. 
 
 #redirect to GitHub's OAuth page and confirm callback URL
-@app.route('/login')
-def login():   
-    return github.authorize(callback=url_for('authorized', _external=True, _scheme='https')) #callback URL must match the pre-configured callback URL
 
 @app.route('/logout')
 def logout():

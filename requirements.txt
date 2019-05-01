@@ -1,4 +1,4 @@
-
+flask-pymongo
 itsdangerous
 Jinja2
 MarkupSafe
