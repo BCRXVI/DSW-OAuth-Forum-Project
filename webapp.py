@@ -36,7 +36,7 @@ url = 'mongodb://{}:{}@{}/{}'.format(
     
 client = pymongo.MongoClient(os.environ["MONGO_HOST"])
 db = client[os.environ["MONGO_DBNAME"]]
-collection = db['Forum-Database']
+collection = db['Forum_Collection']
 #TODO: Create and set a global variable for the name of you JSON file here.  The file will be storedd on Heroku, so you don't need to make it in GitHub
 
 #TODO: Create the file on Heroku using os.system.  Ex) os.system("echo '[]'>"+myFile) puts '[]' into your file
@@ -49,7 +49,11 @@ def inject_logged_in():
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    posts = {}
+    for post in collection.find():
+        posts += post
+        
+    return render_template('home.html', past_posts = posts)
 
 @app.route('/posted', methods=['POST'])
 def post():
@@ -59,7 +63,7 @@ def post():
     db = client['Forum_Database']
     posternote = {'user': username, 'post': newpost}
     post_id = collection.insert_one(posternote).inserted_id
-    return render_template('home.html')
+    return render_template('home.html', past_posts = posternote)
     #return render_template('home.html', past_posts = posttohtml())
     #Every post should include the username of the poster and text of the post. 
 #redirect to GitHub's OAuth page and confirm callback URL
