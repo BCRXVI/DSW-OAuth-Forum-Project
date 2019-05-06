@@ -49,11 +49,9 @@ def inject_logged_in():
 
 @app.route('/')
 def home():
-    posts = {}
-    for post in collection.find():
-        posts += post
-        
-    return render_template('home.html', past_posts = posts)
+    
+    
+    return render_template('home.html', past_posts = )
 
 @app.route('/posted', methods=['POST'])
 def post():
@@ -69,7 +67,7 @@ def post():
 #redirect to GitHub's OAuth page and confirm callback URL
 @app.route('/login')
 def login():   
-    return github.authorize(callback=url_for('authorized', _external=True, _scheme='http')) #callback URL must match the pre-configured callback URL
+    return github.authorize(callback=url_for('authorized', _external=True, _scheme='https')) #callback URL must match the pre-configured callback URL
 
     #This function should add the new post to the JSON file of posts and then render home.html and display the posts.  
     #Every post should include the username of the poster and text of the post. 
