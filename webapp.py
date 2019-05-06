@@ -39,11 +39,10 @@ db = client[os.environ["MONGO_DBNAME"]]
 collection = db['Forum_Collection']
 #TODO: Create and set a global variable for the name of you JSON file here.  The file will be storedd on Heroku, so you don't need to make it in GitHub
 
-#TODO: Create the file on Heroku using os.system.  Ex) os.system("echo '[]'>"+myFile) puts '[]' into your file
-
 def main():   
     pass
 @app.context_processor
+
 def inject_logged_in():
     return {"logged_in":('github_token' in session)}
 
@@ -53,7 +52,9 @@ def home():
     
     return render_template('home.html', past_posts = )
 
+
 @app.route('/posted', methods=['POST'])
+<<<<<<< HEAD
 def post():
     newpost = request.form['message']
     username = session['user_data']['login']
