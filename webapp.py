@@ -50,7 +50,7 @@ def inject_logged_in():
 def home():
     
     
-    return render_template('home.html', past_posts = )
+    return render_template('home.html', past_posts = posternote)
 
 
 @app.route('/posted', methods=['POST'])
