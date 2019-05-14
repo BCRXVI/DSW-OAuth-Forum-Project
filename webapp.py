@@ -15,6 +15,7 @@ app.debug = True #Change this to False for production
 
 app.secret_key = os.environ['SECRET_KEY'] #used to sign session cookies
 oauth = OAuth(app)
+posternote = None
 
 #Set up GitHub as OAuth provider
 github = oauth.remote_app(
