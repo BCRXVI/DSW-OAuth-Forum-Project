@@ -54,6 +54,7 @@ def home():
 
 
 @app.route('/posted', methods=['POST'])
+<<<<<<< HEAD
 def post():
     newpost = request.form['message']
     username = session['user_data']['login']
